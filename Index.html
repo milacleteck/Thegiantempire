@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TheGiantEmpire - Home</title>
+<style>
+  /* Basic reset & style */
+  body {
+    margin: 0; font-family: Arial, sans-serif;
+    background: white; color: black;
+  }
+  header {
+    background: black; color: white;
+    padding: 10px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  nav a {
+    color: white; text-decoration: none; margin: 0 10px;
+    font-weight: bold;
+  }
+  nav a:hover {
+    color: #0f88f1; /* blue highlight */
+  }
+  .lang-switch {
+    cursor: pointer; font-weight: bold;
+  }
+  main {
+    padding: 20px;
+    max-width: 900px; margin: auto;
+  }
+  h1 {
+    color: #0f88f1; /* blue */
+  }
+  button {
+    background: #0f88f1; color: white; border: none;
+    padding: 10px 20px; margin-top: 10px;
+    cursor: pointer; font-weight: bold;
+    border-radius: 4px;
+  }
+  button:hover {
+    background: #107f3d; /* green */
+  }
+  form {
+    margin-top: 20px;
+  }
+  label {
+    display: block; margin-top: 10px; font-weight: bold;
+  }
+  input, textarea {
+    width: 100%; padding: 8px; margin-top: 5px;
+    border: 1px solid #ccc; border-radius: 4px;
+    font-size: 1em;
+  }
+  @media(max-width: 600px){
+    header {
+      flex-direction: column; align-items: flex-start;
+    }
+    nav {
+      margin-top: 10px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div><strong>TheGiantEmpire</strong></div>
+  <nav>
+    <a href="#home" class="nav-link" data-lang="en">Home</a>
+    <a href="#tutorials" class="nav-link" data-lang="en">Tutorials</a>
+    <a href="#media" class="nav-link" data-lang="en">Media</a>
+    <a href="#services" class="nav-link" data-lang="en">Services</a>
+    <a href="#contact" class="nav-link" data-lang="en">Contact</a>
+  </nav>
+  <div class="lang-switch" id="langSwitch">EN / RW</div>
+</header>
+
+<main>
+  <section id="home" class="page-section" lang="en">
+    <h1>Welcome to TheGiantEmpire!</h1>
+    <p>Your place for tutorials, media, services and more.</p>
+  </section>
+  <section id="tutorials" class="page-section" lang="en" style="display:none;">
+    <h1>Tutorials</h1>
+    <p>Here you will find useful tutorials.</p>
+  </section>
+  <section id="media" class="page-section" lang="en" style="display:none;">
+    <h1>Media</h1>
+    <p>Explore our photos and videos.</p>
+  </section>
+  <section id="services" class="page-section" lang="en" style="display:none;">
+    <h1>Services</h1>
+    <p>Discover the services we offer.</p>
+  </section>
+  <section id="contact" class="page-section" lang="en" style="display:none;">
+    <h1>Contact Us</h1>
+    <form id="contactForm" action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="POST" target="_blank">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="entry.1234567890" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="entry.0987654321" />
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="entry.1122334455" rows="4" required></textarea>
+
+      <button type="submit">Send via Google Form</button>
+    </form>
+
+    <button id="whatsappBtn">Send Message on WhatsApp</button>
+  </section>
+</main>
+
+<script>
+  // Navigation page switch
+  const links = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('.page-section');
+
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').substring(1);
+      sections.forEach(sec => sec.style.display = 'none');
+      document.getElementById(targetId).style.display = 'block';
+    });
+  });
+
+  // Language switch
+  const langSwitch = document.getElementById('langSwitch');
+  let currentLang = 'en';
+
+  const translations = {
+    en: {
+      home_title: "Welcome to TheGiantEmpire!",
+      home_desc: "Your place for tutorials, media, services and more.",
+      tutorials_title: "Tutorials",
+      tutorials_desc: "Here you will find useful tutorials.",
+      media_title: "Media",
+      media_desc: "Explore our photos and videos.",
+      services_title: "Services",
+      services_desc: "Discover the services we offer.",
+      contact_title: "Contact Us",
+      contact_name: "Name:",
+      contact_email: "Email:",
+      contact_message: "Message:",
+      send_google: "Send via Google Form",
+      send_whatsapp: "Send Message on WhatsApp"
+    },
+    rw: {
+      home_title: "Murakaza neza kuri TheGiantEmpire!",
+      home_desc: "Aho usanga tutorials, amafoto, serivisi n'ibindi byinshi.",
+      tutorials_title: "Tutorials",
+      tutorials_desc: "Aha uzasangamo tutorials z’ingirakamaro.",
+      media_title: "Amafoto n'Amashusho",
+      media_desc: "Sura amafoto n’amashusho byacu.",
+      services_title: "Serivisi",
+      services_desc: "Menya serivisi dutanga.",
+      contact_title: "Twandikire",
+      contact_name: "Izina:",
+      contact_email: "Email:",
+      contact_message: "Ubutumwa:",
+      send_google: "Ohereza kuri Google Form",
+      send_whatsapp: "Ohereza Ubutumwa kuri WhatsApp"
+    }
+  };
+
+  function setLanguage(lang) {
+    currentLang = lang;
+    document.querySelectorAll('[lang]').forEach(section => {
+      section.lang === lang ? section.style.display = 'block' : section.style.display = 'none';
+    });
+
+    // Update nav links and texts
+    links.forEach(link => {
+      const key = link.textContent.toLowerCase();
+      if (lang === 'rw') {
+        if (key === 'home') link.textContent = 'Ahabanza';
+        else if (key === 'tutorials') link.textContent = 'Tutorials';
+        else if (key === 'media') link.textContent = 'Amafoto';
+        else if (key === 'services') link.textContent = 'Serivisi';
+        else if (key === 'contact') link.textContent = 'Twandikire';
+      } else {
+        if (key === 'ahabanza') link.textContent = 'Home';
+        else if (key === 'tutorials') link.textContent = 'Tutorials';
+        else if (key === 'amafoto') link.textContent = 'Media';
+        else if (key === 'serivisi') link.textContent = 'Services';
+        else if (key === 'twandikire') link.textContent = 'Contact';
+      }
+    });
+
+    // Update texts in sections
+    document.querySelector('#home h1').textContent = translations[lang].home_title;
+    document.querySelector('#home p').textContent = translations[lang].home_desc;
+    document.querySelector('#tutorials h1').textContent = translations[lang].tutorials_title;
+    document.querySelector('#tutorials p').textContent = translations[lang].tutorials_desc;
+    document.querySelector('#media h1').textContent = translations[lang].media_title;
+    document.querySelector('#media p').textContent = translations[lang].media_desc;
+    document.querySelector('#services h1').textContent = translations[lang].services_title;
+    document.querySelector('#services p').textContent = translations[lang].services_desc;
+    document.querySelector('#contact h1').textContent = translations[lang].contact_title;
+    document.querySelector('label[for="name"]').textContent = translations[lang].contact_name;
+    document.querySelector('label[for="email"]').textContent = translations[lang].contact_email;
+    document.querySelector('label[for="message"]').textContent = translations[lang].contact_message;
+    document.querySelector('button[type="submit"]').textContent = translations[lang].send_google;
+    document.getElementById('whatsappBtn').textContent = translations[lang].send_whatsapp;
+  }
+
+  langSwitch.addEventListener('click', () => {
+    currentLang = currentLang === 'en' ? 'rw' : 'en';
+    setLanguage(currentLang);
+  });
+
+  setLanguage(currentLang);
+
+  // WhatsApp button functionality
+  document.getElementById('whatsappBtn').addEventListener('click', () => {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if (!name || !message) {
+      alert('Please fill in your name and message.');
+      return;
+    }
+
+    const phone = '+250726591083';
+    const text = `Name: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
+    const url = `https://wa.me/${phone.replace(/\D/g, '')}?text=${text}`;
+
+    window.open(url, '_blank');
+  });
+
+  // Navigation default to show Home
+  sections.forEach(sec => sec.style.display = 'none');
+  document.getElementById('home').style.display = 'block';
+</script>
+
+</body>
+</html>
